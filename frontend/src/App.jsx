@@ -15,6 +15,8 @@ import axios from 'axios';
 
 function App() {
   let [user, setUser] = useState({});
+  let [locations, setLocations] = useState({});
+  let [buses, setBuses] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem(configs.tokenKey);
@@ -36,6 +38,25 @@ function App() {
         });
     }
   }, []);
+  useEffect(() => {
+    // Fetch locations
+    axios.get(configs.getBackendUrl('/get-locations'))
+        .then(response => {
+            setLocations(response.data.locations);
+        })
+        .catch(error => {
+            console.error('Error fetching locations:', error);
+        });
+
+    // Fetch all buses
+    axios.get(configs.getBackendUrl('/get-buses'))
+        .then(response => {
+            setBuses(response.data.buses);
+        })
+        .catch(error => {
+            console.error('Error fetching buses:', error);
+        });
+}, []);
 
   return (
     <>
@@ -43,24 +64,12 @@ function App() {
       <NavBar userDetails={user} />
       <main>
         <Routes>
-          <Route path={configs.homePage} Component={Home} />
+          <Route path={configs.homePage} element={<Home locations={locations} buses={buses} />} />
           <Route path={configs.registerPage} Component={Register} />
-          <Route path={configs.loginPage} Component={
-            () => {
-              return <Login setUser={setUser} />
-            }
-          } />
-          <Route path={configs.dashboardPage} Component={
-            () => {
-              return <Dashboard user={setUser} setUser={setUser} />
-            }
-          } />
+          <Route path={configs.loginPage} element={<Login setUser={setUser} />} />
+          <Route path={configs.dashboardPage} element={<Dashboard user={setUser} setUser={setUser} />} />
           <Route path={configs.bookingPage} Component={Booking} />
-          <Route path={configs.adminDashboardPage} Component={
-            () => {
-              return <AdminDashboard user={setUser} setUser={setUser} />
-            }
-          } />
+          <Route path={configs.adminDashboardPage} element={<AdminDashboard user={setUser} setUser={setUser} />} />
         </Routes>
       </main>
     </>

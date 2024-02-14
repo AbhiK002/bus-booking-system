@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import configs from '../../config';
 import { useNavigate } from 'react-router-dom';
+import './LoginRegister.css'
 
 function Login({ setUser }) {
     const navigate = useNavigate();
@@ -34,13 +35,14 @@ function Login({ setUser }) {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+        <div className='login-div'>
+            <h1>Login</h1>
+            <form className='login-form' onSubmit={handleSubmit}>
                 <label>Email:</label>
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <label>Password:</label>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <div className='spacer'></div>
                 <button type="submit">Login</button>
                 <button className='secondary' onClick={() => {
                     navigate(configs.registerPage);
