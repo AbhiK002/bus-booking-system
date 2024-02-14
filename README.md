@@ -1,5 +1,11 @@
 # Bus Booking System
 Abhineet Kelley, Registration Number 12108869
+Tech Stack used:
+- MongoDB - NoSQL database
+- React - frontend library
+- Node.js - JavaScript runtime
+- Express - backend API
+- Toastify - alerts and popups
 
 ## What the app needs:
 1. Authentication
