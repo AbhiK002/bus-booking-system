@@ -155,6 +155,14 @@ app.get("/get-bus-details", verifyToken, (req, res) => {
     }
 })
 
+app.post("/confirm-booking", verifyToken, (req, res) => {
+
+})
+
+app.delete("/delete-booking", verifyToken, (req, res) => {
+    
+})
+
 // Authentication
 app.post("/register", (req, res) => {
     const name = req.body.name;
