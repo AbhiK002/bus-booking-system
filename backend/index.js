@@ -156,11 +156,127 @@ app.get("/get-bus-details", verifyToken, (req, res) => {
 })
 
 app.post("/confirm-booking", verifyToken, (req, res) => {
+    const { seatNumber, busId } = req.body;
 
-})
+    if (!(seatNumber && busId)) {
+        return res.status(400).json({
+            message: "Missing required fields",
+            required: ["seatNumber", "busId"],
+            valid: false
+        });
+    }
+
+    const userId = req.tokenUserId;
+
+    Booking.findOne({ seat_number: seatNumber, bus: busId })
+        .then(existingBooking => {
+            if (existingBooking && existingBooking.booked_by !== userId) {
+                return res.status(400).json({ message: "Seat number " + seatNumber + " is already booked by another user", valid: false });
+            }
+
+            Seat.findOne({ seat_number: seatNumber, bus: busId })
+                .then(seat => {
+                    if (!seat || !seat.available) {
+                        return res.status(400).json({ message: "Seat number " + seatNumber + " is not available", valid: false });
+                    }
+
+                    Booking.create({
+                        booked_by: userId,
+                        amount: seat.price,
+                        seat_number: seatNumber,
+                        bus: busId
+                    })
+                    .then(() => {
+                        Seat.updateOne({ seat_number: seatNumber, bus: busId }, { available: false })
+                            .then((seat) => {
+                                Seat.find({ bus: busId, available: false })
+                                .then(seats => {
+                                    Bus.findByIdAndUpdate(busId, { seats_occupied: seats.length })
+                                    .then(() => {
+                                        return res.status(200).json({ message: "Booking confirmed", valid: true });
+                                    })
+                                    .catch(() => {
+                                        console.error("Failed to update seats_booked in bus");
+                                        return res.status(500).json({ message: "Server error", valid: false });
+                                    });
+                                })
+                                .catch(() => {
+                                    console.error("Failed to fetch seats");
+                                    return res.status(500).json({ message: "Server error", valid: false })
+                                })
+                            })
+                            .catch(() => {
+                                return res.status(500).json({ message: "Server error", valid: false });
+                            });
+                    })
+                    .catch(() => {
+                        console.error("Booking failed due to server error: " + seatNumber + " seat by user " + userId + " for bus " + busId);
+                        return res.status(500).json({ message: "Booking failed due to server error", valid: false });
+                    });
+                })
+                .catch(() => {
+                    return res.status(500).json({ message: "Failed to find seat", valid: false });
+                });
+        })
+        .catch(() => {
+            return res.status(500).json({ message: "Failed to find existing booking", valid: false });
+        });
+});
+
 
 app.delete("/delete-booking", verifyToken, (req, res) => {
+    const { bookingId } = req.body;
 
+    if (!bookingId) {
+        return res.status(409).json({
+            message: "missing required fields",
+            required: ["bookingId"]
+        })
+    }
+
+    Booking.findByIdAndDelete(bookingId)
+    .then(booking => {
+        Seat.updateOne({ seat_number: booking.seat_number, bus: booking.bus }, { available: true })
+        .then(seat => {
+            Seat.find({ bus: booking.bus, available: false })
+            .then(seats => {
+                Bus.findByIdAndUpdate(booking.bus, { seats_occupied: seats.length }, { new: true })
+                .then(bus => {
+                    return res.status(200).json({
+                        message: "Booking successfully deleted",
+                        valid: true
+                    })
+                })
+                .catch(err => {
+                    console.error("Failed to update seats_occupied in bus");
+                    return res.status(500).json({
+                        message: "Some error occurred",
+                        valid: false
+                    })
+                })
+            })
+            .catch(err => {
+                console.error("Failed to find seats");
+                return res.status(500).json({
+                    message: "Some error occurred",
+                    valid: false
+                })
+            })
+        })
+        .catch(err => {
+            console.error("Failed to update seat");
+            return res.status(500).json({
+                message: "Some error occurred",
+                valid: false
+            })
+        })
+    })
+    .catch(err => {
+        return res.status(500).json({
+            message: "Error while deleting booking",
+            valid: false
+        })
+    })
 })
 
 app.post("/get-user-details", verifyToken, (req, res) => {
@@ -537,7 +653,7 @@ app.get("/get-users", verifyToken, (req, res) => {
                 .then((users) => {
                     let usersWithBookings = [];
                     for (let i=0; i<users.length; i++) {
-                        Booking.find({ booked_by: user._id }, "amount seat_number createdAt").then((bookings) => {
+                        Booking.find({ booked_by: users[i]._id }, "amount seat_number bus createdAt").then((bookings) => {
                             usersWithBookings.push(
                                 {
                                     name: users[i].name,
