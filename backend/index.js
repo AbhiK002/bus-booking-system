@@ -279,8 +279,38 @@ app.delete("/delete-booking", verifyToken, (req, res) => {
     })
 })
 
-app.post("/get-user-details", verifyToken, (req, res) => {
-    
+app.get("/get-user-details", verifyToken, (req, res) => {
+    const userIdFromToken = req.tokenUserId;
+
+    User.findById(userIdFromToken)
+        .then((user) => {
+            if (user) {
+                Booking.find({ booked_by: userIdFromToken })
+                .then((bookings) => {
+                    return res.status(200).json({
+                        message: "User details fetched successfully",
+                        user: {
+                            ...user.toObject(),
+                            bookings: bookings,
+                        },
+                        valid: true
+                    })
+                })
+                .catch(err => {
+                    return res.status(500).json({
+                        message: "Error while retrieving bookings",
+                        valid: false
+                    })
+                })
+            }
+            else {
+                return res.status(404).json({ message: "No such user found", valid: false })
+            }
+        })
+        .catch((err) => {
+            console.error("Error finding user");
+            return res.status(500).json({ message: "Server error", valid: false });
+        });
 })
 
 // Authentication
