@@ -165,5 +165,5 @@ For all the admin endpoints, the first thing that will be checked is if the user
 - Implement connection between frontend and backend
 - Implement admin dashboard
 
-#### Due to the shortage of time, I could not complete everything in this exciting project. My target was to implement a robust and modern admin dashboard that would look exactly like the UI mockups. However I wasn't fast enough.
-This is my submission for the case study/assignment. Thank you for the opportunity.
+
+This is my submission for the case study/assignment. Thank you.
