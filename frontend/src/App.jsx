@@ -65,7 +65,7 @@ function App() {
       <main>
         <Routes>
           <Route path={configs.homePage} element={<Home locations={locations} buses={buses} />} />
-          <Route path={configs.registerPage} Component={Register} />
+          <Route path={configs.registerPage} element={<Register setUser={setUser} />} />
           <Route path={configs.loginPage} element={<Login setUser={setUser} />} />
           <Route path={configs.dashboardPage} element={<Dashboard user={setUser} setUser={setUser} />} />
           <Route path={configs.bookingPage} Component={Booking} />

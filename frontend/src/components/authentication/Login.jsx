@@ -35,9 +35,9 @@ function Login({ setUser }) {
     };
 
     return (
-        <div className='login-div'>
+        <div className='inp-div'>
             <h1>Login</h1>
-            <form className='login-form' onSubmit={handleSubmit}>
+            <form className='inp-form' onSubmit={handleSubmit}>
                 <label>Email:</label>
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <label>Password:</label>

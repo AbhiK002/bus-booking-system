@@ -33,10 +33,10 @@ function Home({locations, buses}) {
                                 <h3>{bus.description}</h3>
                             </div>
                             <div className="bus-route">
-                                <p>From: <span>{getCityName(bus.from)}</span></p>
-                                <p>To: <span>{getCityName(bus.to)}</span></p>
-                                <p>Departure: <span>{getTime(bus.departure)}</span></p>
-                                <p>Arrival: <span>{getTime(bus.arrival)}</span></p>
+                                <p>From: <span className='city'>{getCityName(bus.from)}</span></p>
+                                <p>To: <span className='city'>{getCityName(bus.to)}</span></p>
+                                <p>Departure: <span className='time'>{getTime(bus.departure)}</span></p>
+                                <p>Arrival: <span className='time'>{getTime(bus.arrival)}</span></p>
                             </div>
                         </div>
                     })

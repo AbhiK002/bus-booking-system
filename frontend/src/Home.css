@@ -21,6 +21,9 @@
     background-color: rgba(var(--primary-col), 0.4);
     padding: 16px
 }
+.bus-card h2, .bus-card h3, .bus-card p {
+    margin: 0;
+}
 
 .bus-details {
     flex: 1;
@@ -31,4 +34,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
+}
+
+.bus-route .city {
+    color: var(--primary-dark);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.bus-route .time {
+    color: black
 }

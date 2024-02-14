@@ -14,9 +14,11 @@ function NavBar({ userDetails }) {
             }}>
                 BusGo
             </div>
-            <div className="navbar-profile">
-                <Link to={userLoggedIn ? (userDetails.admin ? configs.adminDashboardPage : configs.dashboardPage) : configs.loginPage}>{userLoggedIn ? "Dashboard" : "Login/Sign Up"}</Link>
-            </div>
+            <button className="navbar-profile" onClick={() => {
+                navigate(userLoggedIn ? (userDetails.admin ? configs.adminDashboardPage : configs.dashboardPage) : configs.loginPage)
+            }}>
+                {userLoggedIn ? "Dashboard" : "Login/Sign Up"}
+            </button>
         </nav>
     );
 };

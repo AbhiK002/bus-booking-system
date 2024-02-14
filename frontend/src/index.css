@@ -37,6 +37,7 @@
 body, html {
     margin: 0;
     padding: 0;
+    background-color: rgba(var(--secondary-col), 0.2);
 }
 
 input, select, button {

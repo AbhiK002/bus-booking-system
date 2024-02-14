@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import configs from '../../config';
 import { useNavigate } from 'react-router-dom';
+import './LoginRegister.css'
 
 function Register({ setUser }) {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Register({ setUser }) {
             .then((res) => {
                 if (res.data.valid) {
                     toast.success(res.data.message);
-                    setUser(res.data.user);
+                    setUser(res.data.user_created);
                     localStorage.setItem(configs.tokenKey, res.data.token);
                     navigate(configs.homePage);
                 } else {
@@ -35,15 +36,16 @@ function Register({ setUser }) {
     };
 
     return (
-        <div>
+        <div className='inp-div'>
             <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
+            <form className='inp-form' onSubmit={handleSubmit}>
                 <label>Name:</label>
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
                 <label>Email:</label>
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <label>Password:</label>
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <div className="spacer"></div>
                 <button type="submit">Register</button>
                 <button className='secondary' onClick={() => {
                     navigate(configs.loginPage);

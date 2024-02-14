@@ -1,4 +1,4 @@
-.login-div {
+.inp-div {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -6,7 +6,7 @@
     justify-content: center;
 }
 
-.login-form {
+.inp-form {
     display: flex;
     flex-direction: column;
     gap: 12px;

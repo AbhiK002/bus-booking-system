@@ -4,6 +4,7 @@
     align-items: center;
     padding: 10px 20px;
     color: black;
+    background-color: var(--secondary);
     border-bottom: 2px solid rgba(0, 0, 0, 0.6);
 }
 
@@ -28,6 +29,10 @@
 
 .navbar-profile {
     margin-left: 20px;
+    background-color: var(--primary);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 16px;
 }
 
 .navbar-profile a {

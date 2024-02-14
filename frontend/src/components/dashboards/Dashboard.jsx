@@ -3,6 +3,7 @@ import axios from 'axios';
 import configs from '../../config';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import './Dashboard.css'
 
 function Dashboard({ user, setUser }) {
     const navigate = useNavigate();
@@ -59,23 +60,31 @@ function Dashboard({ user, setUser }) {
     };
 
     return (
-        <div>
-            <h1>My Dashboard</h1>
-            {userDetails && (
-                <div>
-                    <h2>{userDetails.name}</h2>
-                    <h3>{userDetails.email}</h3>
-                    <button onClick={logOut}>LOG OUT</button>
+        <div className='dashboard-div'>
+            <div className="profile">
+                <h1>My Dashboard</h1>
+                {userDetails && (
+                    <div className='profile-details'>
+                        <h2>{userDetails.name}</h2>
+                        <h2>{userDetails.email}</h2>
+                        <button className='critical logout' onClick={logOut}>LOG OUT</button>
+                    </div>
+                )}
+            </div>
+            <div className="bookings">
+                <h1>My Bookings</h1>
+                <div className="bookings-column">
+                    {userDetails && userDetails.bookings.length > 0 ?
+                     userDetails.bookings.map(booking => (
+                        <div key={booking._id}>
+                            <p>Amount: {booking.amount}</p>
+                            <p>Seat Number: {booking.seat_number}</p>
+                            <button className='critical' onClick={() => handleDeleteBooking(booking._id)}>Delete</button>
+                        </div>
+                    )) : <h3 className='no-bookings'>You haven't made any bookings yet</h3>
+                }
                 </div>
-            )}
-            <h1>My Bookings</h1>
-            {userDetails && userDetails.bookings.map(booking => (
-                <div key={booking._id}>
-                    <p>Amount: {booking.amount}</p>
-                    <p>Seat Number: {booking.seat_number}</p>
-                    <button onClick={() => handleDeleteBooking(booking._id)}>Delete</button>
-                </div>
-            ))}
+            </div>
         </div>
     );
 }
