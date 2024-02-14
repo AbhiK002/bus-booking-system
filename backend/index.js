@@ -160,6 +160,10 @@ app.post("/confirm-booking", verifyToken, (req, res) => {
 })
 
 app.delete("/delete-booking", verifyToken, (req, res) => {
+
+})
+
+app.post("/get-user-details", verifyToken, (req, res) => {
     
 })
 
