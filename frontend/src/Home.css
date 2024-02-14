@@ -1,3 +1,18 @@
+.bus-filters {
+    min-height: 200px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-dark);
+    color: white;
+    font-size: 24px;
+}
+
+.bus-filters select {
+    font-size: 24px;
+}
+
 .buses-results {
     display: flex;
     flex-direction: column;
@@ -19,7 +34,15 @@
     border-radius: 16px;
     width: 100%;
     background-color: rgba(var(--primary-col), 0.4);
-    padding: 16px
+    padding: 16px;
+    gap: 16px;
+    border: 4px solid transparent;
+    transition: 300ms;
+    cursor: pointer;
+}
+.bus-card:hover {
+    background-color: rgba(var(--primary-col), 0.2);
+    border-color: rgba(var(--primary-col), 0.9);
 }
 .bus-card h2, .bus-card h3, .bus-card p {
     margin: 0;
@@ -27,10 +50,19 @@
 
 .bus-details {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px
+}
+
+.bus-details .distance {
+    margin-top: 12px;
+    color: maroon;
+    font-weight: bold;
 }
 
 .bus-route {
-    flex: 1;
+    flex: 2;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
@@ -44,4 +76,11 @@
 
 .bus-route .time {
     color: black
+}
+
+.home-buses .no-results {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
 }
