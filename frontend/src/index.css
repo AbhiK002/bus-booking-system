@@ -1,0 +1,96 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+
+    color-scheme: light;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    font-size: 16px;
+
+    --text: rgb(12, 4, 3);
+    --text-light: rgb(247, 247, 247);
+    --background: rgb(254, 251, 251);
+
+    --primary-col: 0, 127, 98;
+    --primary: rgb(var(--primary-col));
+    --primary-light: rgb(43, 209, 171);
+    --primary-dark: rgb(0, 100, 75);
+
+    --secondary-col: 176, 255, 235;
+    --secondary: rgb(var(--secondary-col));
+    --secondary-light: rgb(201, 255, 242);
+    --secondary-dark: rgb(87, 226, 191);
+
+    --accent-col: 144, 27, 36;
+    --accent: rgb(var(--accent-col));
+    --accent-light: rgb(213, 116, 124);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+input, select, button {
+    font-size: 18px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: 300ms;
+}
+
+button {
+    background-color: rgb(var(--primary-col));
+    color: var(--text-light);
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: var(--primary-dark);
+}
+button:active {
+    scale: 0.98
+}
+button.secondary {
+    background-color: rgb(var(--secondary-col));
+    color: var(--text)
+}
+button.secondary:hover {
+    background-color: var(--secondary-light);
+}
+button.critical {
+    background-color: var(--accent);
+}
+
+.radio-group {
+    border-radius: 16px;
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background-color: rgba(var(--primary-col), 0.2);
+    width: 100%;
+    max-width: 800px;
+}
+.radio-group label {
+    text-align: center;
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+    transition: 300ms;
+}
+.radio-group label:hover {
+    background-color: rgba(var(--primary-col), 0.2);
+}
+.radio-group input {
+    display: none;
+}
+.radio-group input:checked + label {
+    background-color: rgba(var(--primary-col), 0.8);
+    color: var(--text-light);
+    font-weight: bold;
+}
