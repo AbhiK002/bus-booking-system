@@ -164,14 +164,11 @@ For all the admin endpoints, the first thing that will be checked is if the user
 1. All required endpoints of API completed and implemented ✅
 2. Backend part complete ✅
 3. Database implemented and tested ✅
-4. Frontend partially done with minimal styling
-5. Only user authentication in working condition, rest no connection done between the frontend and the backend
-6. No admin dashboard implemented, as a good admin dashboard takes a lot of time to implement, which was my plan here.
+4. Frontend done with simple styling ✅
+5. User authentication, Bus filtering using from/to locations, Distance of trip calculation, etc implemented ✅
 
 ## Next Steps
 - Complete frontend implementation
-- Implement connection between frontend and backend
-- Implement admin dashboard
-
+- Implement more connections between frontend and backend
 
 This is my submission for the case study/assignment. Thank you.
